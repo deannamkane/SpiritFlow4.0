@@ -90,6 +90,7 @@ const App: React.FC = () => {
               setMorningEnergy={setMorningEnergy}
               setMorningEmotion={setMorningEmotion}
               riseQuote={todayContent.riseQuote}
+              riseAudio={todayContent.riseAudio}
               onShowProgress={() => setCurrentView('progress')}
             />
           ) : (
@@ -100,6 +101,7 @@ const App: React.FC = () => {
               goals={goals}
               onToggleGoal={handleToggleGoal}
               restQuote={todayContent.restQuote}
+              restAudio={todayContent.restAudio}
               setEveningVictory={setEveningVictory}
               setEveningRelease={setEveningRelease}
             />

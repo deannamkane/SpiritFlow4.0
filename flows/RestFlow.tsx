@@ -7,6 +7,7 @@ import QuoteCard from '../components/QuoteCard';
 import StarRating from '../components/StarRating';
 import ProgressBar from '../components/ProgressBar';
 import type { Goal } from '../App';
+import type { AudioContent } from '../data/dailyContent';
 
 interface RestFlowProps {
     morningAffirmation: string;
@@ -15,6 +16,7 @@ interface RestFlowProps {
     goals: Goal[];
     onToggleGoal: (index: number) => void;
     restQuote: { quote: string; author: string };
+    restAudio: AudioContent;
     setEveningVictory: (victory: string) => void;
     setEveningRelease: (release: string) => void;
 }
@@ -26,6 +28,7 @@ const RestFlow: React.FC<RestFlowProps> = ({
     goals, 
     onToggleGoal, 
     restQuote,
+    restAudio,
     setEveningVictory,
     setEveningRelease 
 }) => {
@@ -62,9 +65,9 @@ const RestFlow: React.FC<RestFlowProps> = ({
                 <div className="space-y-8 sm:space-y-12">
                     <Card>
                         <AudioPlayer
-                            title="Gratitude for the Small Wins"
-                            prompt="Gratitude for the Small Wins. As the day comes to a close, let's take a moment to honor our journey. Breathe deeply, feeling the cool night air fill your lungs. Exhale, and let go of the day's hustle. Tonight, we celebrate the small wins. The quiet moments of progress that often go unnoticed. Perhaps it was a kind word you shared. A task you completed. A moment you chose patience over frustration. Each of these is a victory. A testament to your strength and grace. Let gratitude wash over you for these small, significant moments. They are the building blocks of a beautiful life. Acknowledge your effort. Honor your journey. You did well today. Now, release all that is left and drift into a peaceful, restorative rest."
-                            duration="3:45"
+                            title={restAudio.title}
+                            prompt={restAudio.prompt}
+                            duration={restAudio.duration}
                             waveformColor="bg-moonlight-silver/80"
                             buttonColor="bg-moonlight-silver/90 text-deep-indigo"
                             textColor="text-moonlight-silver"

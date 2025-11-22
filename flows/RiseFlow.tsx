@@ -8,6 +8,7 @@ import BreathingCircle from '../components/BreathingCircle';
 import GoalSetter from '../components/GoalSetter';
 import IntentionSetter from '../components/IntentionSetter';
 import type { Goal } from '../App';
+import type { AudioContent } from '../data/dailyContent';
 
 interface RiseFlowProps {
     morningAffirmation: string;
@@ -17,6 +18,7 @@ interface RiseFlowProps {
     setMorningEnergy: (energy: string) => void;
     setMorningEmotion: (emotion: string) => void;
     riseQuote: { quote: string; author: string };
+    riseAudio: AudioContent;
     onShowProgress: () => void;
 }
 
@@ -28,6 +30,7 @@ const RiseFlow: React.FC<RiseFlowProps> = ({
     setMorningEnergy,
     setMorningEmotion,
     riseQuote,
+    riseAudio,
     onShowProgress 
 }) => {
     const [isCompleted, setIsCompleted] = useState(false);
@@ -83,9 +86,9 @@ const RiseFlow: React.FC<RiseFlowProps> = ({
                         <div className="flex flex-col h-full justify-center">
                             <h3 className="text-center text-slate-800 font-semibold mb-6 opacity-80">Listen & Align</h3>
                             <AudioPlayer
-                                title="Energy Follows Attention"
-                                prompt="Energy Follows Attention. Take a deep breath in, and as you exhale, release any tension. Let's begin by bringing your awareness to this present moment. Notice the subtle sensations in your body. The gentle rhythm of your breath. Today, we focus on a simple truth: where your attention goes, your energy flows. Imagine your attention as a beam of golden light. You can direct this light wherever you choose. Will you focus it on worry, on doubt? Or will you shine it on gratitude, on possibility, on the love that surrounds you? You have the power to choose. Place your energy on what you wish to grow. Focus on your strength. On your peace. On your joy. Feel that energy expand within you, filling you with warmth and purpose. Carry this light with you throughout your day."
-                                duration="2:13"
+                                title={riseAudio.title}
+                                prompt={riseAudio.prompt}
+                                duration={riseAudio.duration}
                                 waveformColor="bg-slate-800"
                                 buttonColor="bg-slate-800 text-soft-sand"
                                 textColor="text-slate-800"
