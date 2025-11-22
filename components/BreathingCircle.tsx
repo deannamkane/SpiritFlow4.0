@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useMemo } from 'react';
 import Card from './Card';
 
@@ -30,7 +29,7 @@ const techniques = [
 ];
 
 
-const BreathingCircle: React.FC<{ textColor: string }> = ({ textColor }) => {
+const BreathingCircle: React.FC<{ textColor: string; className?: string }> = ({ textColor, className }) => {
   const [selectedTechniqueIndex, setSelectedTechniqueIndex] = useState(0);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [time, setTime] = useState(60);
@@ -41,7 +40,7 @@ const BreathingCircle: React.FC<{ textColor: string }> = ({ textColor }) => {
   const currentTechnique = useMemo(() => techniques[selectedTechniqueIndex], [selectedTechniqueIndex]);
   const currentStep = useMemo(() => currentTechnique.pattern[currentStepIndex], [currentTechnique, currentStepIndex]);
 
-  // Effect for the breathing cycle (inhale, hold, exhale)
+  // Effect for breathing cycle
   useEffect(() => {
     const timer = setTimeout(() => {
       setCurrentStepIndex((prevIndex) => (prevIndex + 1) % currentTechnique.pattern.length);
@@ -50,7 +49,7 @@ const BreathingCircle: React.FC<{ textColor: string }> = ({ textColor }) => {
     return () => clearTimeout(timer);
   }, [currentStep, currentTechnique]);
 
-  // Effect for the overall 60s timer
+  // Effect for 60s timer
   useEffect(() => {
     const timerInterval = setInterval(() => {
       setTime(prev => (prev > 0 ? prev - 1 : 0));
@@ -60,13 +59,13 @@ const BreathingCircle: React.FC<{ textColor: string }> = ({ textColor }) => {
   
   const handleTechniqueChange = (index: number) => {
     setSelectedTechniqueIndex(index);
-    setCurrentStepIndex(0); // Reset cycle on technique change
+    setCurrentStepIndex(0);
   };
   
   const isPulsing = currentStep.label.includes('In');
 
   return (
-    <Card className="flex flex-col items-center justify-center">
+    <Card className={`flex flex-col items-center justify-center ${className || ''}`}>
         <div className="flex justify-center space-x-2 mb-6">
             {techniques.map((tech, index) => (
                 <button
@@ -75,7 +74,7 @@ const BreathingCircle: React.FC<{ textColor: string }> = ({ textColor }) => {
                     className={`px-3 py-1 text-sm font-semibold rounded-full transition-colors duration-300 ${
                         selectedTechniqueIndex === index
                         ? 'bg-golden-sun text-slate-800'
-                        : 'bg-white/10 text-slate-600 hover:bg-white/20'
+                        : 'bg-slate-800/10 text-slate-600 hover:bg-slate-800/20'
                     }`}
                 >
                     {tech.name}
@@ -85,7 +84,7 @@ const BreathingCircle: React.FC<{ textColor: string }> = ({ textColor }) => {
 
       <div className="relative w-52 h-52 flex items-center justify-center">
         <svg className="absolute w-full h-full transform -rotate-90" viewBox="0 0 200 200">
-            <circle cx="100" cy="100" r={radius} stroke="rgba(255,255,255,0.2)" strokeWidth="10" fill="transparent" />
+            <circle cx="100" cy="100" r={radius} stroke="rgba(0,0,0,0.05)" strokeWidth="10" fill="transparent" />
             <circle
                 cx="100" cy="100" r={radius}
                 stroke="url(#grad)" strokeWidth="10" fill="transparent"
@@ -102,7 +101,7 @@ const BreathingCircle: React.FC<{ textColor: string }> = ({ textColor }) => {
             </defs>
         </svg>
         <div 
-            className={`absolute w-40 h-40 bg-golden-sun/80 rounded-full ${isPulsing ? 'animate-pulse-breathe' : ''}`}
+            className={`absolute w-40 h-40 bg-gradient-to-br from-golden-sun to-warm-blush opacity-80 rounded-full ${isPulsing ? 'animate-pulse-breathe' : ''}`}
             style={{ animationDuration: `${currentStep.duration}ms` }}
         />
         <span className={`relative text-2xl font-bold z-10 text-slate-800`}>
