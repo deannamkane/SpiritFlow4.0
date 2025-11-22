@@ -45,19 +45,12 @@ interface AudioPlayerProps {
 
 const WaveformBar: React.FC<{ height: number; color: string; delay: number; isPlaying: boolean }> = ({ height, color, delay, isPlaying }) => (
   <div
-    className={`w-1 rounded-full ${color} transition-transform duration-500`}
+    className={`w-1 rounded-full ${color} transition-transform duration-500 ${isPlaying ? 'animate-wave' : ''}`}
     style={{ 
       height: `${height}px`, 
-      animation: isPlaying ? `wave 1.5s ease-in-out infinite ${delay}s` : 'none'
+      animationDelay: `${delay}s`
     }}
-  >
-    <style>{`
-      @keyframes wave {
-        0%, 100% { transform: scaleY(0.3); }
-        50% { transform: scaleY(1); }
-      }
-    `}</style>
-  </div>
+  />
 );
 
 const AudioPlayer: React.FC<AudioPlayerProps> = ({ title, prompt, duration, waveformColor, buttonColor, textColor }) => {
